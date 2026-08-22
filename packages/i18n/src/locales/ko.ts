@@ -2,6 +2,7 @@ import type { Dict } from "../index.js";
 
 export const ko: Partial<Dict> = {
     "app.name": "WhaleX",
+    "app.backToExit": "한 번 더 누르면 종료됩니다",
     "onboarding.welcome.title": "WhaleX에 오신 것을 환영합니다",
     "onboarding.welcome.subtitle": "DeepSeek 기반 코딩 에이전트 — 내 컴퓨터에서 코드를 읽고, 고치고, 실행합니다.",
     "onboarding.welcome.start": "시작하기",

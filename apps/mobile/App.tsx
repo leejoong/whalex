@@ -1,5 +1,14 @@
-import { useEffect, useState } from "react";
-import { ActivityIndicator, AppState, StyleSheet, Text, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  AppState,
+  BackHandler,
+  Platform,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View,
+} from "react-native";
 import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
@@ -111,6 +120,34 @@ function Shell() {
     });
     return () => sub.remove();
   }, [kick]);
+
+  // The hardware back button walks the screens instead of killing the app:
+  // chat → session list, and from the list a second press within two
+  // seconds exits (the standard Android press-again pattern).
+  const screenRef = useRef(screen);
+  screenRef.current = screen;
+  const lastBackRef = useRef(0);
+  useEffect(() => {
+    const sub = BackHandler.addEventListener("hardwareBackPress", () => {
+      const s = screenRef.current;
+      if (s === "chat") {
+        useMobileSession.getState().closeSession();
+        setScreen("sessions");
+        return true;
+      }
+      if (s === "sessions") {
+        const now = Date.now();
+        if (now - lastBackRef.current < 2000) return false; // exit
+        lastBackRef.current = now;
+        if (Platform.OS === "android") {
+          ToastAndroid.show(t("app.backToExit"), ToastAndroid.SHORT);
+        }
+        return true;
+      }
+      return false; // pair / connecting: default behaviour
+    });
+    return () => sub.remove();
+  }, []);
 
   useEffect(() => {
     if (phase !== "connected") return;

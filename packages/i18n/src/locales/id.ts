@@ -2,6 +2,7 @@ import type { Dict } from "../index.js";
 
 export const id: Partial<Dict> = {
     "app.name": "WhaleX",
+    "app.backToExit": "Tekan lagi untuk keluar",
     "onboarding.welcome.title": "Selamat datang di WhaleX",
     "onboarding.welcome.subtitle": "Agen coding bertenaga DeepSeek yang membaca, menyunting, dan menjalankan kode di komputer Anda.",
     "onboarding.welcome.start": "Mulai",

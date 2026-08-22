@@ -2,6 +2,7 @@ import type { Dict } from "../index.js";
 
 export const vi: Partial<Dict> = {
     "app.name": "WhaleX",
+    "app.backToExit": "Nhấn lần nữa để thoát",
     "onboarding.welcome.title": "Chào mừng đến với WhaleX",
     "onboarding.welcome.subtitle": "Tác nhân lập trình chạy trên DeepSeek: đọc, sửa và chạy mã ngay trên máy của bạn.",
     "onboarding.welcome.start": "Bắt đầu",

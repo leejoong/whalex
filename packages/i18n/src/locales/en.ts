@@ -4,6 +4,7 @@
  */
 export const en = {
     "app.name": "WhaleX",
+    "app.backToExit": "Press back again to exit",
     "onboarding.welcome.title": "Welcome to WhaleX",
     "onboarding.welcome.subtitle": "A DeepSeek-powered coding agent that reads, edits, and runs code on your machine.",
     "onboarding.welcome.start": "Get started",

@@ -2,6 +2,7 @@ import type { Dict } from "../index.js";
 
 export const zhTW: Partial<Dict> = {
     "app.name": "WhaleX",
+    "app.backToExit": "再按一次退出",
     "onboarding.welcome.title": "歡迎使用 WhaleX",
     "onboarding.welcome.subtitle": "由 DeepSeek 驅動的程式設計代理，在你的電腦上讀取、修改並執行程式碼。",
     "onboarding.welcome.start": "開始使用",
