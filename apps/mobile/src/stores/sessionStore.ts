@@ -107,6 +107,13 @@ let buffer: AgentEventEnvelope[] | null = null;
 export const useMobileSession = create<MobileSessionState>((set, get) => {
   // Register as the connection's event sink once, at store creation.
   useConnectionStore.setState({
+    // Every successful (re)connect re-opens the active session: a new socket
+    // carries no subscriptions, so without this a drop mid-turn left the
+    // phone frozen on "working" while the desktop had long finished.
+    onConnected: () => {
+      const { cwd, activeSessionId } = get();
+      if (cwd && activeSessionId) void get().open(cwd, activeSessionId);
+    },
     onEvent: (env) => handleEnvelope(env),
     onAlert: (env) => {
       const ev = env.event;

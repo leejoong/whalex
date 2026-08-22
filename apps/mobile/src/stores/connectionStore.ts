@@ -33,6 +33,12 @@ interface ConnectionState {
   /** Session event fan-in; the session store registers itself here. */
   onEvent: ((env: AgentEventEnvelope) => void) | null;
   onAlert: ((env: AgentEventEnvelope) => void) | null;
+  /**
+   * Fired after every successful handshake. A new socket starts with no
+   * subscriptions, so whoever holds an open session must re-subscribe and
+   * re-hydrate — without this, a drop mid-turn froze the screen forever.
+   */
+  onConnected: (() => void) | null;
   /** Spend-limit / low-balance alert from the desktop; sticky until dismissed. */
   usageWarning: string | null;
   dismissUsageWarning(): void;
@@ -57,6 +63,7 @@ export const useConnectionStore = create<ConnectionState>((set, get) => ({
   attempt: 0,
   onEvent: null,
   onAlert: null,
+  onConnected: null,
   usageWarning: null,
 
   dismissUsageWarning() {
@@ -99,6 +106,9 @@ export const useConnectionStore = create<ConnectionState>((set, get) => ({
         return;
       }
       set({ phase: "connected", client, hello, attempt: 0 });
+      // A fresh socket knows nothing about sessions — let the session layer
+      // re-subscribe and re-hydrate whatever it had open.
+      get().onConnected?.();
       // The desktop's quick-tunnel address changes on every restart, so adopt
       // whatever it reports now — that's what keeps the next trip out working.
       const fresh: PairedComputer = {
