@@ -3,6 +3,10 @@ import type { Dict } from "../index.js";
 export const ja: Partial<Dict> = {
     "app.name": "WhaleX",
     "app.backToExit": "もう一度押すと終了します",
+    "notif.done": "作業完了",
+    "notif.error": "作業失敗",
+    "notif.permission": "承認が必要です",
+    "notif.question": "エージェントの質問",
     "onboarding.welcome.title": "WhaleX へようこそ",
     "onboarding.welcome.subtitle": "DeepSeek 搭載のコーディングエージェント。あなたのPCでコードを読み、編集し、実行します。",
     "onboarding.welcome.start": "はじめる",

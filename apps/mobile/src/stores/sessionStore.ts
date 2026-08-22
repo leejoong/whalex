@@ -8,6 +8,7 @@ import {
 } from "@whalex/client-core";
 import type { AgentEventEnvelope, ModelInfo, ReasoningEffort, SessionMeta } from "@whalex/shared";
 import { useConnectionStore } from "./connectionStore";
+import { notify } from "../lib/notify";
 
 const foldCtx: FoldContext = {
   now: () => Date.now(),
@@ -118,6 +119,10 @@ export const useMobileSession = create<MobileSessionState>((set, get) => {
             [env.sessionId]: (s.pendingBySession[env.sessionId] ?? 0) + 1,
           },
         }));
+        notify(
+          ev.type === "permission-request" ? "permission" : "question",
+          get().sessions.find((m) => m.sessionId === env.sessionId)?.title,
+        );
         return;
       }
       if (ev.type === "permission-resolved") {
@@ -139,6 +144,10 @@ export const useMobileSession = create<MobileSessionState>((set, get) => {
       }
       if (ev.type === "done" || ev.type === "error") {
         set((s) => ({ pendingBySession: { ...s.pendingBySession, [env.sessionId]: 0 } }));
+        notify(
+          ev.type === "done" ? "done" : "error",
+          get().sessions.find((m) => m.sessionId === env.sessionId)?.title,
+        );
         void get().refreshSessions();
       }
     },
@@ -176,6 +185,12 @@ export const useMobileSession = create<MobileSessionState>((set, get) => {
     }
     const { state, signals } = foldEnvelope(clientSlice(s), env.event, foldCtx);
     set({ ...state, lastSeq: env.seq });
+    // The phone in a pocket still learns the run ended or wants an answer.
+    const evType = env.event.type;
+    if (evType === "done") notify("done", sessionTitle(get(), env.sessionId));
+    else if (evType === "error") notify("error", env.event.message);
+    else if (evType === "permission-request") notify("permission");
+    else if (evType === "question-request") notify("question");
     for (const sig of signals) {
       switch (sig.type) {
         case "turn-finished":
@@ -535,6 +550,10 @@ export const useMobileSession = create<MobileSessionState>((set, get) => {
     },
   };
 });
+
+function sessionTitle(s: MobileSessionState, sessionId: string): string | undefined {
+  return s.sessions.find((m) => m.sessionId === sessionId)?.title || undefined;
+}
 
 function clientSlice(s: MobileSessionState): ClientSessionState {
   return {

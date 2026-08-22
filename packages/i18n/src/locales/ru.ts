@@ -3,6 +3,10 @@ import type { Dict } from "../index.js";
 export const ru: Partial<Dict> = {
     "app.name": "WhaleX",
     "app.backToExit": "Нажмите ещё раз для выхода",
+    "notif.done": "Задача завершена",
+    "notif.error": "Задача не удалась",
+    "notif.permission": "Нужно одобрение",
+    "notif.question": "У агента вопрос",
     "onboarding.welcome.title": "Добро пожаловать в WhaleX",
     "onboarding.welcome.subtitle": "Кодинг-агент на DeepSeek: читает, редактирует и запускает код на вашем компьютере.",
     "onboarding.welcome.start": "Начать",

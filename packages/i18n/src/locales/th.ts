@@ -3,6 +3,10 @@ import type { Dict } from "../index.js";
 export const th: Partial<Dict> = {
     "app.name": "WhaleX",
     "app.backToExit": "กดอีกครั้งเพื่อออก",
+    "notif.done": "งานเสร็จแล้ว",
+    "notif.error": "งานล้มเหลว",
+    "notif.permission": "ต้องการการอนุมัติ",
+    "notif.question": "เอเจนต์มีคำถาม",
     "onboarding.welcome.title": "ยินดีต้อนรับสู่ WhaleX",
     "onboarding.welcome.subtitle": "เอเจนต์เขียนโค้ดที่ขับเคลื่อนด้วย DeepSeek อ่าน แก้ไข และรันโค้ดบนเครื่องของคุณ",
     "onboarding.welcome.start": "เริ่มใช้งาน",

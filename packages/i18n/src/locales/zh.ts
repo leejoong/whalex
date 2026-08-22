@@ -3,6 +3,10 @@ import type { Dict } from "../index.js";
 export const zh: Partial<Dict> = {
     "app.name": "WhaleX",
     "app.backToExit": "再按一次退出",
+    "notif.done": "任务完成",
+    "notif.error": "任务失败",
+    "notif.permission": "需要批准",
+    "notif.question": "代理有疑问",
     "onboarding.welcome.title": "欢迎使用 WhaleX",
     "onboarding.welcome.subtitle": "由 DeepSeek 驱动的编码智能体，在你的电脑上读取、修改并运行代码。",
     "onboarding.welcome.start": "开始使用",

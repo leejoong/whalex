@@ -24,6 +24,7 @@ import { colors, space, type } from "./src/theme";
 import type { AppLanguage } from "@whalex/shared";
 import { setLanguage, t } from "./src/i18n";
 import { listComputers, type PairedComputer } from "./src/lib/computers";
+import { setupNotifications } from "./src/lib/notify";
 import { useConnectionStore } from "./src/stores/connectionStore";
 import { useMobileSession } from "./src/stores/sessionStore";
 import { PairScreen } from "./src/screens/PairScreen";
@@ -96,6 +97,7 @@ function Shell() {
       if (p.screen === "chat" || p.screen === "pair") setScreen(p.screen);
       return;
     }
+    void setupNotifications();
     void (async () => {
       const computers = await listComputers();
       const last = computers.sort(
